@@ -1,4 +1,3 @@
-
 let nes = new Nes();
 let audioHandler = new AudioHandler();
 let paused = false;

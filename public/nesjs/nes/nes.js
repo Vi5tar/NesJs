@@ -1,4 +1,3 @@
-
 function Nes() {
 
   // state version, for savestates
