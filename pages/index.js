@@ -1,8 +1,9 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Script from "next/script";
+import MemoryCard from "./components/memory-card";
 
-export default function Home() {
+export default function Home({ connectedWallet, connectWallet }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -19,6 +20,7 @@ export default function Home() {
           <button id="hardreset">Power cycle</button>
           <button id="runframe">Run 1 frame</button>
         </div>
+        <MemoryCard connectedWallet={connectedWallet} connectWallet={connectWallet} />
         <canvas id="output"></canvas>
         <pre id="log"></pre>
       </main>
