@@ -2,6 +2,11 @@
   padding: 0 2rem;
 }
 
+.controls {
+  display: flex;
+  gap: .5rem;
+}
+
 .main {
   min-height: 100vh;
   padding: 4rem 0;
@@ -14,6 +19,7 @@
 
 .footer {
   display: flex;
+  flex-direction: column;
   flex: 1;
   padding: 2rem 0;
   border-top: 1px solid #eaeaea;
@@ -21,11 +27,10 @@
   align-items: center;
 }
 
-.footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
+.footer p {
+  margin: 0;
+  line-height: 1.5;
+  text-align: center;
 }
 
 .title a {

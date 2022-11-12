@@ -1,6 +1,6 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import Script from 'next/script'
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import Script from "next/script";
 
 export default function Home() {
   return (
@@ -12,21 +12,24 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <input id="rom" type="file" />
-        <button id="pause">Pause</button>
-        <button id="reset">Reset</button>
-        <button id="hardreset">Power cycle</button>
-        <button id="runframe">Run 1 frame</button><br />
+        <div className={styles.controls}>
+          <input id="rom" type="file" />
+          <button id="pause">Pause</button>
+          <button id="reset">Reset</button>
+          <button id="hardreset">Power cycle</button>
+          <button id="runframe">Run 1 frame</button>
+        </div>
         <canvas id="output"></canvas>
         <pre id="log"></pre>
-        <p>
-          NesJs, by elzo_d. <a href="debug.html">Debugger</a>, <a href="nsfplayer.html">NsfJs</a>.<br />
-          Source on <a href="https://github.com/elzo-d/NesJs">Github</a>.
-        </p>
       </main>
 
       <footer className={styles.footer}>
-        
+        <p>
+          NesJs, by elzo_d. <a href="debug.html">Debugger</a>,{" "}<a href="nsfplayer.html">NsfJs</a>.
+        </p>
+        <p>
+          Source on <a href="https://github.com/elzo-d/NesJs">Github</a>.
+        </p>
       </footer>
       <Script src="nesjs/lib/zip.js" />
       <Script src="nesjs/lib/inflate.js" />
@@ -44,5 +47,5 @@ export default function Home() {
       <Script src="nesjs/js/audio.js" />
       <Script src="nesjs/js/main.js" />
     </div>
-  )
+  );
 }
