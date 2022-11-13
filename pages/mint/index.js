@@ -1,12 +1,33 @@
 import Head from "next/head";
 import styles from "../../styles/Home.module.css";
+import abi from "../../memory-cards/MemoryCards.json";
+import { ethers } from "ethers";
 
 export default function Mint({ connectedWallet, connectWallet }) {
   const mintMemoryCard = async () => {
-    console.log(`minty minty to ${connectedWallet}`);
-  };
+    console.log('Minting Memory Card');
+    try {
+      const { ethereum } = window;
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum, "any");
+        const signer = provider.getSigner();
+        const memoryCardsContract = new ethers.Contract(
+          process.env.NEXT_PUBLIC_MEMORY_CARD_CONTRACT_ADDRESS,
+          abi.abi,
+          signer
+        );
 
-  console.log(connectedWallet);
+        const mintTransaction = await memoryCardsContract.mint();
+        await mintTransaction.wait();
+
+        console.log(`Memory Card Transaction: ${mintTransaction.hash}`);
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className={styles.container}>
