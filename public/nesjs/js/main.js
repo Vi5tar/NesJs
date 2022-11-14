@@ -1,10 +1,8 @@
 let nes = new Nes();
 let audioHandler = new AudioHandler();
 let paused = false;
-let loaded = false;
 let pausedInBg = false;
 let loopId = 0;
-let loadedName = "";
 
 let c = el("output");
 c.width = 256;
@@ -89,7 +87,7 @@ el("rom").onchange = function(e) {
 }
 
 el("pause").onclick = function(e) {
-  if(paused && loaded) {
+  if(paused && nes.loaded) {
     loopId = requestAnimationFrame(update);
     audioHandler.start();
     paused = false;
@@ -111,7 +109,7 @@ el("hardreset").onclick = function(e) {
 }
 
 el("runframe").onclick = function(e) {
-  if(loaded) {
+  if(nes.loaded) {
     runFrame();
   }
 }
@@ -119,12 +117,12 @@ el("runframe").onclick = function(e) {
 document.onvisibilitychange = function(e) {
   if(document.hidden) {
     pausedInBg = false;
-    if(!paused && loaded) {
+    if(!paused && nes.loaded) {
       el("pause").click();
       pausedInBg = true;
     }
   } else {
-    if(pausedInBg && loaded) {
+    if(pausedInBg && nes.loaded) {
       el("pause").click();
       pausedInBg = false;
     }
@@ -146,22 +144,22 @@ function loadRom(rom, name) {
       log("Loaded battery");
     }
     nes.reset(true);
-    if(!loaded && !paused) {
+    if(!nes.loaded && !paused) {
       loopId = requestAnimationFrame(update);
       audioHandler.start();
     }
-    loaded = true;
-    loadedName = name;
+    nes.loaded = true;
+    nes.loadedName = name;
   }
 }
 
 function saveBatteryForRom() {
   // save the loadedName's battery data
-  if(loaded) {
+  if(nes.loaded) {
     let data = nes.getBattery();
     if(data) {
       try {
-        localStorage.setItem(loadedName + "_battery", JSON.stringify(data));
+        localStorage.setItem(nes.loadedName + "_battery", JSON.stringify(data));
         log("Saved battery");
       } catch(e) {
         log("Failed to save battery: " + e);
@@ -212,17 +210,17 @@ window.onkeyup = function(e) {
     nes.setButtonReleased(2, controlsP2[e.key.toLowerCase()]);
     e.preventDefault();
   }
-  if(e.key.toLowerCase() === "m" && loaded) {
+  if(e.key.toLowerCase() === "m" && nes.loaded) {
     let saveState = nes.getState();
     try {
-      localStorage.setItem(loadedName + "_savestate", JSON.stringify(saveState));
+      localStorage.setItem(nes.loadedName + "_savestate", JSON.stringify(saveState));
       log("Saved state");
     } catch(e) {
       log("Failed to save state: " + e);
     }
   }
-  if(e.key.toLowerCase() === "n" && loaded) {
-    let data = localStorage.getItem(loadedName + "_savestate");
+  if(e.key.toLowerCase() === "n" && nes.loaded) {
+    let data = localStorage.getItem(nes.loadedName + "_savestate");
     if(data) {
       let obj = JSON.parse(data);
       if(nes.setState(obj)) {

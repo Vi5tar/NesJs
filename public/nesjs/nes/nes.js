@@ -1,4 +1,6 @@
 function Nes() {
+  this.loaded = false;
+  this.loadedName = "";
 
   // state version, for savestates
   this.stateVersion = 1;

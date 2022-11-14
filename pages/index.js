@@ -2,8 +2,31 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Script from "next/script";
 import MemoryCard from "./components/memory-card";
+import { useState } from 'react'
 
 export default function Home({ connectedWallet, connectWallet }) {
+  const [acessibleNes, setAcessibleNes] = useState({});
+
+  const getNesState = () => {
+    return acessibleNes.getState();
+  };
+
+  const setNesState = (state) => {
+    acessibleNes.setState(state);
+  };
+
+  const getNesBattery = () => {
+    return acessibleNes.getBattery();
+  };
+
+  const setNesBattery = (battery) => {
+    acessibleNes.setBattery(battery);
+  };
+
+  const getLoadedName = () => {
+    return acessibleNes.loadedName
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -20,7 +43,7 @@ export default function Home({ connectedWallet, connectWallet }) {
           <button id="hardreset">Power cycle</button>
           <button id="runframe">Run 1 frame</button>
         </div>
-        <MemoryCard connectedWallet={connectedWallet} connectWallet={connectWallet} />
+        <MemoryCard connectedWallet={connectedWallet} connectWallet={connectWallet} getNesState={getNesState} setNesState={setNesState} getNesBattery={getNesBattery} setNesBattery={setNesBattery} getLoadedName={getLoadedName} />
         <canvas id="output"></canvas>
         <pre id="log"></pre>
       </main>
@@ -47,7 +70,7 @@ export default function Home({ connectedWallet, connectWallet }) {
       <Script src="nesjs/nes/apu.js" />
       <Script src="nesjs/nes/nes.js" />
       <Script src="nesjs/js/audio.js" />
-      <Script src="nesjs/js/main.js" />
+      <Script src="nesjs/js/main.js" onLoad={() => {setAcessibleNes(nes)}} />
     </div>
   );
 }
