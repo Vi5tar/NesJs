@@ -56,21 +56,7 @@ export default function Home({ connectedWallet, connectWallet }) {
           Source on <a href="https://github.com/elzo-d/NesJs">Github</a>.
         </p>
       </footer>
-      <Script src="nesjs/lib/zip.js" />
-      <Script src="nesjs/lib/inflate.js" />
-      <Script src="nesjs/nes/mappers.js" />
-      <Script src="nesjs/mappers/nrom.js" />
-      <Script src="nesjs/mappers/mmc1.js" />
-      <Script src="nesjs/mappers/uxrom.js" />
-      <Script src="nesjs/mappers/cnrom.js" />
-      <Script src="nesjs/mappers/mmc3.js" />
-      <Script src="nesjs/mappers/axrom.js" />
-      <Script src="nesjs/nes/cpu.js" />
-      <Script src="nesjs/nes/pipu.js" />
-      <Script src="nesjs/nes/apu.js" />
-      <Script src="nesjs/nes/nes.js" />
-      <Script src="nesjs/js/audio.js" />
-      <Script src="nesjs/js/main.js" onLoad={() => {setAcessibleNes(nes)}} />
+      <Script src="nes.js" onLoad={() => {setAcessibleNes(nes)}} />
     </div>
   );
 }

@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "sh compile-nes.sh && next dev",
+    "build": "sh compile-nes.sh && next build",
+    "start": "sh compile-nes.sh && next start",
+    "lint": "sh compile-nes.sh && next lint"
   },
   "dependencies": {
     "alchemy-sdk": "^2.2.1",
