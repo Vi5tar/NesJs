@@ -47,7 +47,9 @@ export default function MemoryCard({ connectedWallet, connectWallet, setNesBatte
           signer
         );
 
-        const saveGameTransaction = await memoryCardsContract.saveGame(selectedMemoryCard, getLoadedName(), getNesBattery().data.toString());
+        const serializedSaveData = JSON.stringify(getNesBattery().data);
+        const saveName = getLoadedName();
+        const saveGameTransaction = await memoryCardsContract.saveGame(selectedMemoryCard, saveName, serializedSaveData);
         await saveGameTransaction.wait();
 
         console.log(`Game Save Transaction: ${saveGameTransaction.hash}`);
@@ -60,6 +62,7 @@ export default function MemoryCard({ connectedWallet, connectWallet, setNesBatte
   };
 
   const loadState = async () => {
+    console.log('Loading from memory card');
     try {
       const { ethereum } = window;
       if (ethereum) {
@@ -71,9 +74,11 @@ export default function MemoryCard({ connectedWallet, connectWallet, setNesBatte
           signer
         );
 
-        const gameData = await memoryCardsContract.loadGame(selectedMemoryCard, getLoadedName());
+        const saveName = getLoadedName();
+        const serializedSaveData = await memoryCardsContract.loadGame(selectedMemoryCard, saveName);
+        const deSerializedSaveData = JSON.parse(serializedSaveData);
 
-        const battery = {data: gameData.split(',').map(string => parseInt(string))}
+        const battery = {data: deSerializedSaveData}
         setNesBattery(battery);
         console.log('battery set');
       } else {
