@@ -21,6 +21,7 @@ export default function Home({ connectedWallet, connectWallet }) {
 
   const setNesBattery = (battery) => {
     acessibleNes.setBattery(battery);
+    acessibleNes.reset();
   };
 
   const getLoadedName = () => {
